@@ -1,0 +1,76 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset="UTF-8">
+   
+    
+  </head>
+
+<body>
+
+<div class="main">
+	<p>
+	<?php
+	$serverName = "localhost";
+	$userName = "kissa";
+	$password = "miau";
+	$db = "temperature";
+
+	
+	
+	$conn = new mysqli($serverName,$userName,$password,$db);
+
+	if($conn -> connect_error)
+	{
+		die("<strong>Connection failed: </strong>".$conn->connect_error);
+	}
+	
+	$retval = mysqli_query($conn,"SELECT * FROM temperature");
+
+	if(!$retval)
+	{
+		die('Could not get data : '.mysqli_error());
+	}
+
+
+	echo "<p><strong>Temperature (Celsius):</strong></p>";
+
+	while($row = mysqli_fetch_assoc($retval))
+	{
+		echo "<p>{$row['temp']}</p>";
+		echo "<p id='demo'></p>";
+
+		echo "<script>
+				var myVar = setInterval(myTimer, 1000);
+
+				function myTimer() {
+					var d = new Date();
+					document.getElementById('demo').innerHTML = d.toLocaleTimeString();
+					
+				}
+		</script>";
+	}
+
+	
+
+	mysqli_close($conn);
+	
+	
+
+	?>
+	</p>
+
+
+
+</div>
+
+<div><p><IFRAME src="http://172.20.10.9:8000/stream.mjpg" align="center" width="320" height="240" scrolling="no" frameborder=no marginheight="0px"</IFRAME></p></div>
+
+
+</body>
+</html>
+
